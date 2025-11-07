@@ -136,7 +136,7 @@ const ServicesSection = () => {
                   <img 
                     src="/handshake.png" 
                     alt="Design Process" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </div>
                 <div className="absolute -top-4 -right-4 p-4 glass-card rounded-lg rotate-3">
