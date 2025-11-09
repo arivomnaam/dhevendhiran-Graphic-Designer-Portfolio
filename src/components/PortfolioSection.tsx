@@ -207,6 +207,31 @@ const PortfolioSection = () => {
                         View Live Project
                       </Button>
                     </div>
+
+                    {/* ============================================ */}
+                    {/* TEMPLATE SECTION 1 - ADD YOUR CONTENT BELOW */}
+                    {/* EDIT: Customize title, description, and content */}
+                    {/* ============================================ */}
+                    <div>
+                      <h4 className="text-sm font-medium mb-2">[ADD SECTION TITLE HERE]</h4>
+                      <p className="text-muted-foreground text-sm">
+                        [ADD YOUR CONTENT HERE - This could be project challenges, client feedback, results achieved, or any other relevant information]
+                      </p>
+                    </div>
+
+                    {/* ============================================ */}
+                    {/* TEMPLATE SECTION 2 - ADD YOUR CONTENT BELOW */}
+                    {/* EDIT: Customize title, description, and content */}
+                    {/* ============================================ */}
+                    <div>
+                      <h4 className="text-sm font-medium mb-2">[ADD SECTION TITLE HERE]</h4>
+                      <div className="space-y-2">
+                        <p className="text-muted-foreground text-sm">
+                          [ADD YOUR CONTENT HERE - You can add multiple paragraphs, lists, or any other formatted content]
+                        </p>
+                        {/* OPTIONAL: Add images, badges, or other components here */}
+                      </div>
+                    </div>
                   </div>
                 </CollapsibleContent>
               </Card>
