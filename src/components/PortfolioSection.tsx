@@ -1,10 +1,10 @@
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, ExternalLink } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 // Define portfolio items
 const portfolioItems = [
@@ -71,9 +71,8 @@ const portfolioItems = [
 ];
 
 const PortfolioSection = () => {
-  // State for filter and expanded items
+  // State for filter
   const [filter, setFilter] = useState("All");
-  const [expandedItems, setExpandedItems] = useState<number[]>([]);
   
   // Get unique categories
   const categories = ["All", ...Array.from(new Set(portfolioItems.map(item => item.category)))];
@@ -82,12 +81,6 @@ const PortfolioSection = () => {
   const filteredItems = filter === "All" 
     ? portfolioItems 
     : portfolioItems.filter(item => item.category === filter);
-
-  const toggleItem = (id: number) => {
-    setExpandedItems(prev => 
-      prev.includes(id) ? prev.filter(itemId => itemId !== id) : [...prev, id]
-    );
-  };
 
   return (
     <section id="portfolio" className="py-24 px-6 md:px-12">
@@ -118,124 +111,40 @@ const PortfolioSection = () => {
         {/* Portfolio grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map((item) => (
-            <Collapsible
+            <Card 
               key={item.id}
-              open={expandedItems.includes(item.id)}
-              onOpenChange={() => toggleItem(item.id)}
+              className="bg-secondary/50 border-white/5 overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 animate-fade-in group"
             >
-              <Card className="bg-secondary/50 border-white/5 overflow-hidden hover:shadow-lg transition-all duration-300">
-                <div className="aspect-[16/10] overflow-hidden">
-                  <AspectRatio ratio={16/10}>
-                    <img 
-                      src={item.imageSrc} 
-                      alt={item.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    />
-                  </AspectRatio>
+              <div className="aspect-[16/10] overflow-hidden">
+                <AspectRatio ratio={16/10}>
+                  <img 
+                    src={item.imageSrc} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </AspectRatio>
+              </div>
+              <CardContent className="pt-6">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-lg font-medium group-hover:text-primary transition-colors">{item.title}</h3>
+                  <span className="text-xs font-medium bg-primary/20 text-primary rounded-full px-2 py-1">
+                    {item.category}
+                  </span>
                 </div>
-                <CardContent className="pt-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-medium">{item.title}</h3>
-                    <span className="text-xs font-medium bg-primary/20 text-primary rounded-full px-2 py-1">
-                      {item.category}
-                    </span>
-                  </div>
-                  <p className="text-muted-foreground text-sm">{item.description}</p>
-                </CardContent>
-                <CardFooter>
-                  <CollapsibleTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      className="w-full text-primary hover:text-primary hover:bg-primary/10 justify-between"
-                    >
-                      View Details
-                      <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${expandedItems.includes(item.id) ? 'rotate-180' : ''}`} />
-                    </Button>
-                  </CollapsibleTrigger>
-                </CardFooter>
-                
-                <CollapsibleContent>
-                  <div className="px-6 pb-6 space-y-6 border-t border-white/5 pt-6">
-                    {/* Image Section */}
-                    <div>
-                      <h4 className="text-sm font-medium mb-3">Project Gallery</h4>
-                      <div className="grid grid-cols-2 gap-2">
-                        <div className="aspect-video bg-secondary rounded-md overflow-hidden">
-                          <img 
-                            src={item.imageSrc} 
-                            alt={`${item.title} preview 1`} 
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="aspect-video bg-secondary rounded-md flex items-center justify-center text-muted-foreground text-xs">
-                          Add image 2
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Description Section */}
-                    <div>
-                      <h4 className="text-sm font-medium mb-2">Description</h4>
-                      <p className="text-muted-foreground text-sm">
-                        {item.detailedDescription}
-                      </p>
-                    </div>
-
-                    {/* Tools Section */}
-                    <div>
-                      <h4 className="text-sm font-medium mb-2">Tools & Technologies</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {item.tools.map((tool) => (
-                          <span key={tool} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs">
-                            {tool}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Project Link Section */}
-                    {/* EDIT: Change the URL in onClick to your actual project link */}
-                    <div>
-                      <h4 className="text-sm font-medium mb-2">Project Link</h4>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        className="gap-2"
-                        onClick={() => window.open('#', '_blank')} // EDIT: Replace '#' with your project URL
-                      >
-                        <ExternalLink className="h-3 w-3" />
-                        View Live Project
-                      </Button>
-                    </div>
-
-                    {/* ============================================ */}
-                    {/* TEMPLATE SECTION 1 - ADD YOUR CONTENT BELOW */}
-                    {/* EDIT: Customize title, description, and content */}
-                    {/* ============================================ */}
-                    <div>
-                      <h4 className="text-sm font-medium mb-2">[ADD SECTION TITLE HERE]</h4>
-                      <p className="text-muted-foreground text-sm">
-                        [ADD YOUR CONTENT HERE - This could be project challenges, client feedback, results achieved, or any other relevant information]
-                      </p>
-                    </div>
-
-                    {/* ============================================ */}
-                    {/* TEMPLATE SECTION 2 - ADD YOUR CONTENT BELOW */}
-                    {/* EDIT: Customize title, description, and content */}
-                    {/* ============================================ */}
-                    <div>
-                      <h4 className="text-sm font-medium mb-2">[ADD SECTION TITLE HERE]</h4>
-                      <div className="space-y-2">
-                        <p className="text-muted-foreground text-sm">
-                          [ADD YOUR CONTENT HERE - You can add multiple paragraphs, lists, or any other formatted content]
-                        </p>
-                        {/* OPTIONAL: Add images, badges, or other components here */}
-                      </div>
-                    </div>
-                  </div>
-                </CollapsibleContent>
-              </Card>
-            </Collapsible>
+                <p className="text-muted-foreground text-sm">{item.description}</p>
+              </CardContent>
+              <CardFooter>
+                <Link to={`/portfolio/${item.id}`} className="w-full">
+                  <Button 
+                    variant="ghost" 
+                    className="w-full text-primary hover:text-primary hover:bg-primary/10 justify-between group/btn"
+                  >
+                    View Details
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
           ))}
         </div>
       </div>
